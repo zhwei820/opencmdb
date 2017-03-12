@@ -1,0 +1,38 @@
+{
+  "name": "vue-multiple-pages",
+  "description": "A Vue.js project",
+  "author": "plortinus@gmail.com",
+  "private": true,
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --inline --hot",
+    "build_dev": "cross-env NODE_ENV=development webpack --progress --hide-modules -w",
+    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules -w"
+  },
+  "dependencies": {
+    "china-area-data": "^2.0.0",
+    "element-ui": "^1.1.6",
+    "file-saver": "^1.3.3",
+    "vue": "^2.1.8",
+    "vue-region-picker": "^3.0.1",
+    "vue-resource": "^1.0.3",
+    "vue-router": "^2.2.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.21.0",
+    "babel-loader": "^6.2.10",
+    "babel-preset-es2015": "^6.18.0",
+    "copy-webpack-plugin": "^4.0.1",
+    "cross-env": "^1.0.8",
+    "css-loader": "^0.23.1",
+    "extract-text-webpack-plugin": "^2.0.0-beta.5",
+    "file-loader": "^0.8.5",
+    "glob": "^7.1.1",
+    "html-webpack-plugin": "^2.26.0",
+    "style-loader": "^0.13.1",
+    "transfer-webpack-plugin": "*",
+    "vue-loader": "^10.0.2",
+    "vue-template-compiler": "^2.1.8",
+    "webpack": "2.2.0-rc.4",
+    "webpack-dev-server": "2.2.0-rc.0"
+  }
+}

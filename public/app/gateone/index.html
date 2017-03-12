@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="static/style.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="static/highlight_js.min.css">
+
+    <script src="static/jquery.min.js" type="text/javascript"></script>
+    <script src="static/jquery.anchor.js" type="text/javascript"></script>
+    <script src="static/jquery.fancybox-1.2.6.pack.js" type="text/javascript"></script>
+    <script src="static/highlight.min.js"></script>
+    <style>
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <script src="static/gateone.js"></script> embeded
+    <div id="gateone_container" style="position: relative; width: 80em; height: 40em;">
+        <div id="gateone"></div>
+    </div>
+
+    <!--<div id="gateone_container" style="position: relative; width: 80em; height: 40em;">
+        <div id="gateone1"></div>
+    </div>
+
+    <form id="add_terminal">
+        <input type="submit" value="Add a Terminal!" style="margin-left: .5em;"></input>
+    </form>-->
+
+    <script>
+    window.onload = function() {
+        GateOne.init({
+            url: 'https://localhost:10443/',
+            'style': {
+                'background-color': 'rgba(0, 0, 0, 0.85)',
+                'box-shadow': '.5em .5em .5em black',
+                'margin-bottom': '0.5em'
+            },
+            auth:"ssh://zw@localhost/"
+        });
+
+        document.querySelector('#add_terminal').onsubmit = function(e) {
+        var existingContainer = GateOne.Utils.getNode('#'+GateOne.prefs.prefix+'container'),
+            container = GateOne.Utils.createElement('div', {
+                'id': 'container', 'class': 'terminal', 'style': {'height': '100%', 'width': '100%'}
+            }),
+            gateone3 = GateOne.Utils.getNode('#gateone1');
+        e.preventDefault(); // Don't actually submit the form
+        if (!existingContainer) {
+            gateone3.appendChild(container); // Put our terminal in the container
+        } else {
+            container = existingContainer;
+        }
+        termNum = GateOne.Terminal.newTerminal(null, null, container); // Create the new terminal
+    }
+    }
+    </script>
+
+</body>
+
+</html>
+
+
+<!--python run_gateone.py --origins=cmdb.com:80 --auth=none-->

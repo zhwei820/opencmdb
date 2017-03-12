@@ -1,0 +1,74 @@
+.breadcrumb_padding {
+    padding: 3px 0 3px 0;
+}
+
+.r {
+    float: right;
+}
+
+.l {
+    float: left;
+}
+
+.disabled {
+    cursor: not-allowed;
+    filter: alpha(opacity=65);
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    opacity: .65;
+}
+
+.height_100 {
+    height: 100%;
+}
+
+.hidden {
+    display: none!important
+}
+
+.form-control {
+    background-image: none;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    background-color: #fff;
+    border-radius: 4px;
+    border: 1px solid #bfcbd9;
+    color: #1f2d3d;
+    display: block;
+    font-size: inherit;
+    height: 36px;
+    line-height: 1;
+    padding: 3px 10px;
+    transition: border-color .2s cubic-bezier(.645, .045, .355, 1);
+    width: 35%;
+}
+
+.del_btn {
+    border-radius: 20px;
+    width: 25px;
+    height: 25px;
+    margin-top: 10px;
+}
+
+.el-input {
+    vertical-align: middle;
+}
+
+.prop_label {
+    vertical-align: middle;
+}
+
+.el-input.is-disabled .el-input__inner {
+    color: #1f2d3d;
+    background-color: #fff;
+}
+.item_edit_dialog .el-textarea{
+    width: 80%;
+}
+
+.el-input {
+    width: 90%;
+}
