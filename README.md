@@ -14,7 +14,7 @@
 	  - Python-3.5.2
 	  - Django-1.10.4
 	  - MongoDB
-	  - MySQL
+	  <!--- MySQL-->
 
 
 # 环境部署
@@ -30,14 +30,14 @@
 	> db.addUser("cmdb", "cmdb");
 	
 
-
+<!--
 ## MySQL 部署（在OpenCMDB中，MySQL用于存放CMDB管理相关数据）：
 
 	[root@linux-node3 ~]# systemctl start mariadb
 	[root@linux-node3 ~]# systemctl enable mariadb
 	MariaDB [(none)]> create database cmdb character set utf8 collate utf8_bin;
 	MariaDB [(none)]> grant all on cmdb.* to cmdb@localhost identified by 'cmdb';
-	MariaDB [(none)]> grant all on cmdb.* to cmdb@'%' identified by 'cmdb';
+	MariaDB [(none)]> grant all on cmdb.* to cmdb@'%' identified by 'cmdb';-->
 
 
 ## Nginx部署
