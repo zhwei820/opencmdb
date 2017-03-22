@@ -40,9 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'django_mongoengine',
-    # 'django_mongoengine.mongo_auth',
-    # 'django_mongoengine.mongo_admin.sites',
-    # 'django_mongoengine.mongo_admin',
+    'django_mongoengine.mongo_auth',
+    'django_mongoengine.mongo_admin.sites',
+    'django_mongoengine.mongo_admin',
     'rest_framework',
     'rest_framework_mongoengine',
 
@@ -145,10 +145,6 @@ WSGI_APPLICATION = 'opencmdb.wsgi.application'
 from decouple import config
 import dj_database_url
 
-DATABASES = {
-    'default': dj_database_url.config(
-        default=config('DATABASE_URL'))
-}
 
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
@@ -200,18 +196,18 @@ mongodb_url=config('MONGODB_URL', '127.0.0.1')
 MONGODB_DATABASES = {
     "default": {
         "name": 'cmdb',
-        "host": mongodb_url,
-        # "host": '127.0.0.1',        
-        "password": 'cmdb',
-        "username": 'cmdb',
+        # "host": mongodb_url,
+        "host": '127.0.0.1',        
+        # "password": 'cmdb',
+        # "username": 'cmdb',
         "tz_aware": True,  # if you using timezones in django (USE_TZ = True)
     },
 }
 
-# AUTHENTICATION_BACKENDS = (
-#     'django_mongoengine.mongo_auth.backends.MongoEngineBackend',
-# )
-# AUTH_USER_MODEL = 'mongo_auth.MongoUser'
+AUTHENTICATION_BACKENDS = (
+    'django_mongoengine.mongo_auth.backends.MongoEngineBackend',
+)
+AUTH_USER_MODEL = 'mongo_auth.MongoUser'
 
 try:
     from opencmdb.server_conf import *

@@ -1,6 +1,7 @@
 from django.utils.encoding import smart_str
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
+from django.conf import settings
 from django.contrib.auth.models import (
     AbstractBaseUser,
     _user_has_perm, _user_get_all_permissions, _user_has_module_perms,
@@ -212,8 +213,8 @@ class AbstractUser(BaseUser, document.Document):
         fields.ReferenceField(Permission), verbose_name=_('user permissions'),
         blank=True, help_text=_('Permissions for the user.'))
 
-    USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['email']
+    USERNAME_FIELD = getattr(settings, 'MONGOENGINE_USERNAME_FIELDS', 'username')
+    REQUIRED_FIELDS = getattr(settings, 'MONGOENGINE_USER_REQUIRED_FIELDS', ['email'])
 
     meta = {
         'abstract': True,
@@ -249,10 +250,10 @@ class AbstractUser(BaseUser, document.Document):
         return check_password(raw_password, self.password)
 
     @classmethod
-    def create_user(cls, username, password, email=None):
+    def _create_user(cls, username, password, email=None, create_superuser=False):
         """Create (and save) a new user with the given username, password and
-        email address.
-        """
+                email address.
+                """
         now = timezone.now()
 
         # Normalize the address by lowercasing the domain part of the email
@@ -267,8 +268,19 @@ class AbstractUser(BaseUser, document.Document):
 
         user = cls(username=username, email=email, date_joined=now)
         user.set_password(password)
+        if create_superuser:
+            user.is_staff = True
+            user.is_superuser = True
         user.save()
         return user
+
+    @classmethod
+    def create_user(cls, username, password, email=None):
+        return cls._create_user(username, password, email)
+
+    @classmethod
+    def create_superuser(cls, username, password, email=None):
+        return cls._create_user(username, password, email, create_superuser=True)
 
     def get_group_permissions(self, obj=None):
         """
@@ -300,6 +312,17 @@ class AbstractUser(BaseUser, document.Document):
 
         # Otherwise we need to check the backends.
         return _user_has_perm(self, perm, obj)
+    
+    def has_perms(self, perm_list, obj=None):
+        """
+        Returns True if the user has each of the specified permissions. If
+        object is passed, it checks if the user has all required perms for this
+        object.
+        """
+        for perm in perm_list:
+            if not self.has_perm(perm, obj):
+                return False
+        return True
 
     def has_module_perms(self, app_label):
         """
@@ -323,7 +346,6 @@ class AbstractUser(BaseUser, document.Document):
         SiteProfileNotAvailable if this site does not allow profiles.
         """
         if not hasattr(self, '_profile_cache'):
-            from django.conf import settings
             if not getattr(settings, 'AUTH_PROFILE_MODULE', False):
                 raise SiteProfileNotAvailable('You need to set AUTH_PROFILE_MO'
                                               'DULE in your project settings')
@@ -349,6 +371,7 @@ class AbstractUser(BaseUser, document.Document):
 
 class User(AbstractUser):
     meta = {'allow_inheritance': True}
+
 
 class MongoUser(BaseUser, models.Model):
     """"
